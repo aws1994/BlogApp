@@ -1,5 +1,6 @@
 package com.example.aws.blogapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.aws.blogapp.Fragments.HomeFragment;
+import com.example.aws.blogapp.Fragments.ProfileFragment;
+import com.example.aws.blogapp.Fragments.SettingsFragment;
 import com.example.aws.blogapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -107,17 +111,30 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+            getSupportActionBar().setTitle("Home");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_share) {
+            getSupportActionBar().setTitle("Profile");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new ProfileFragment()).commit();
 
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_settings) {
+
+            getSupportActionBar().setTitle("Settings");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new SettingsFragment()).commit();
+
+
+        }
+        else if (id == R.id.nav_signout) {
+
+            FirebaseAuth.getInstance().signOut();
+            Intent loginActivity = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(loginActivity);
+            finish();
+
 
         }
 
