@@ -1,9 +1,13 @@
 package com.example.aws.blogapp.Activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +36,10 @@ public class Home extends AppCompatActivity
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser ;
+    Dialog popAddPost ;
+    ImageView popupUserImage,popupPostImage,popupAddBtn;
+    TextView popupTitle,popupDescription;
+    ProgressBar popupClickProgress;
 
 
 
@@ -47,14 +56,16 @@ public class Home extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+        // ini popup
+        iniPopup();
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                popAddPost.show();
             }
         });
 
@@ -69,6 +80,41 @@ public class Home extends AppCompatActivity
 
 
         updateNavHeader();
+
+
+    }
+
+    private void iniPopup() {
+
+        popAddPost = new Dialog(this);
+        popAddPost.setContentView(R.layout.popup_add_post);
+        popAddPost.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popAddPost.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT,Toolbar.LayoutParams.WRAP_CONTENT);
+        popAddPost.getWindow().getAttributes().gravity = Gravity.TOP;
+
+        // ini popup widgets
+        popupUserImage = popAddPost.findViewById(R.id.popup_user_image);
+        popupPostImage = popAddPost.findViewById(R.id.popup_img);
+        popupTitle = popAddPost.findViewById(R.id.popup_title);
+        popupDescription = popAddPost.findViewById(R.id.popup_description);
+        popupAddBtn = popAddPost.findViewById(R.id.popup_add);
+        popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);
+
+        // load Current user profile photo
+
+        Glide.with(Home.this).load(currentUser.getPhotoUrl()).into(popupUserImage);
+
+
+        // Add post click Listener
+
+        popupAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupAddBtn.setVisibility(View.INVISIBLE);
+                popupClickProgress.setVisibility(View.VISIBLE);
+            }
+        });
+
 
 
     }
