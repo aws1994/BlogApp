@@ -23,7 +23,7 @@ public class Post {
         this.timeStamp = ServerValue.TIMESTAMP;
     }
 
-
+   // make sure to have an empty constructor inside ur model class
     public Post() {
     }
 
