@@ -149,6 +149,15 @@
             app:layout_constraintTop_toTopOf="@+id/post_detail_date_name"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_detail_comment" />
+
     </android.support.constraint.ConstraintLayout>
 
 
